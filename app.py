@@ -25,24 +25,28 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 
 # Data Pre-Process
+# Read data from original path
 df=pd.read_csv(r"/Users/bruce/Documents/2020Fall/ECS289H/HW2/globalterrorismdb_0718dist.csv",
-	encoding='ISO-8859-1',low_memory=False)
+    encoding='ISO-8859-1',low_memory=False)
 df = df[[
-	'iyear',
-	'country_txt',
-	'gname',
-	'longitude',
-	'latitude',
-	'nkill',
-	'nwound',
-	'region_txt',
-	'imonth',
-	'iday',
-	'success', 'weaptype1_txt', 
+    'iyear',
+    'country_txt',
+    'gname',
+    'longitude',
+    'latitude',
+    'nkill',
+    'nwound',
+    'region_txt',
+    'imonth',
+    'iday',
+    'success', 'weaptype1_txt', 
             'nhostkid', 'nreleased', 'ransomamt', 'ransompaid', 
             'nperps', 'attacktype1_txt', 'summary']]
 
+# Choose data after 2000
 df = df.loc[df['iyear']>=2000]
+
+# Remove data with missing value
 df = df.loc[df['gname'] != "Unknown"]
 df = df.loc[~df['nkill'].isna()]
 df = df.loc[~df['nwound'].isna()]
@@ -55,7 +59,7 @@ df = df.reset_index()
 
 #Theme Setting
 theme_setting = {
-	"bg_color": "rgba(255, 255, 255, 255)",
+    "bg_color": "rgba(255, 255, 255, 255)",
     "legend_bg_color": "rgba(255, 255, 255, 0.8)",
     "text_color": "black",
     "bar": {
@@ -73,8 +77,8 @@ theme_setting = {
 }
 
 dark_theme_setting = {
-    "bg_color": "rgba(255, 255, 255, 255)",
-    "legend_bg_color": "rgba(255, 255, 255, 0.8)",
+    "bg_color": "rgba(64, 64, 64, 255)",
+    "legend_bg_color": "rgba(64, 64, 64, 0)",
     "text_color": "white",
     "bar": {
         "colors": [
@@ -89,7 +93,6 @@ dark_theme_setting = {
     "land_color":"rgb(255,206,116)",
     "ocean_color":"rgb(0,152,191)"
 }
-
 
 #Trending Line
 def get_trending_line(df, y_label, theme_setting, **kwargs):
